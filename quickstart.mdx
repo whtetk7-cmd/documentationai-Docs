@@ -1,0 +1,153 @@
+---
+title: Quickstart
+description: Get up and running with SMITH by creating your first workspace, publishing your first doc, and exploring the core editing flow. This guide is designed to help teams see value in minutes.
+---
+
+## Overview
+
+Welcome to SMITH. This quickstart helps you create a workspace, publish your first page, and choose the editing workflow that fits your team.
+
+SMITH is designed as a starter kit template, so you can adapt the structure, naming, and content to your own documentation process without changing the core flow.
+
+<Callout kind="info">
+  This page uses sample content and realistic examples so you can customize it for your own product, team, and publishing process.
+</Callout>
+
+## What you will do
+
+<Columns cols={2}>
+  <Card title="Create a workspace" icon="users" href="#create-a-workspace">
+    Set up a shared home for your docs and team members.
+  </Card>
+  <Card title="Publish your first page" icon="rocket" href="#publish-your-first-page">
+    Create, preview, and publish a page with confidence.
+  </Card>
+  <Card title="Choose your workflow" icon="code" href="#choose-your-workflow">
+    Use the web editor or connect a Git-based process.
+  </Card>
+  <Card title="Invite teammates" icon="mail" href="#invite-teammates">
+    Bring writers, reviewers, and subject matter experts into the workspace.
+  </Card>
+</Columns>
+
+## Prerequisites
+
+Before you begin, make sure you have a plan for your first documentation space, including the pages you want to publish and who should help review them.
+
+You do not need a complex setup to get started. A browser, a workspace name, and a draft page are enough for your first publish.
+
+## Create a workspace
+
+<Steps>
+  <Step title="Create the workspace" icon="folder-plus">
+    Sign in to SMITH and create a new workspace named after your project or team. Use a clear name so collaborators can find it quickly.
+  </Step>
+  <Step title="Add your first space" icon="layout-dashboard">
+    Choose a default home page or landing page. Start with a simple structure such as Overview, Getting Started, and Reference.
+  </Step>
+  <Step title="Set your publishing target" icon="globe">
+    Decide whether you will publish to a custom domain, a subpath, or the default hosted URL. You can adjust this later as your documentation grows.
+  </Step>
+</Steps>
+
+## Choose your workflow
+
+<Tabs>
+  <Tab title="Web editor" icon="edit-3">
+    The web editor is best when you want a fast, visual workflow with no Git setup. You can draft pages, review changes, and publish directly from the browser.
+
+    ````bash
+    # Example workflow in the web editor
+    1. Open your workspace
+    2. Create a new page
+    3. Add headings, code blocks, and links
+    4. Preview the page
+    5. Publish when you are ready
+    ````
+  </Tab>
+  <Tab title="Git workflow" icon="git-branch">
+    The Git workflow is best when your docs live alongside your code. You can work in branches, open pull requests, and review changes before they go live.
+
+    ````bash
+    # Example workflow in Git
+    git checkout -b docs/quickstart
+    git add quickstart.mdx
+    git commit -m "Add quickstart page"
+    git push origin docs/quickstart
+    ````
+  </Tab>
+</Tabs>
+
+## Publish your first page
+
+Use a simple page structure for your first publish: a short introduction, a setup section, and a final next-step link. Keep the page focused so readers can finish it quickly.
+
+<CodeGroup tabs="Markdown,MDX">
+  ```markdown
+  ## Getting started
+
+  Create your workspace, draft your first page, and publish when the content is ready.
+
+  1. Write the introduction
+  2. Add setup steps
+  3. Preview the page
+  4. Publish it
+  ```
+
+  ```mdx
+  ## Getting started
+
+  <Callout kind="tip">
+    Keep your first page short and focused. You can always expand it after the initial publish.
+  </Callout>
+
+  1. Write the introduction
+  2. Add setup steps
+  3. Preview the page
+  4. Publish it
+  ```
+</CodeGroup>
+
+## Invite teammates
+
+Bring in the people who will write, review, and maintain the documentation. Assign clear responsibilities so the workflow stays simple as your team grows.
+
+<Columns cols={3}>
+  <Card title="Writers" icon="pen-tool" href="#">
+    Draft and update content.
+  </Card>
+  <Card title="Reviewers" icon="check-circle" href="#">
+    Approve changes before publishing.
+  </Card>
+  <Card title="Admins" icon="settings" href="#">
+    Manage workspace settings and access.
+  </Card>
+</Columns>
+
+## Preview before you publish
+
+Previewing helps you catch formatting issues, broken links, and missing examples before readers see them. Check the page on desktop and mobile views if your workflow supports both.
+
+<Expandable title="What to check in preview" default-open="true">
+  
+- Headings follow a clear hierarchy.
+- Code samples run as written.
+- Links point to the right place.
+- Images have descriptive alt text.
+- Callouts are helpful, not distracting.
+
+</Expandable>
+
+<Expandable title="When to publish" default-open="false">
+  
+Publish when the page answers the question a reader came to solve. If the page still feels rough, keep editing and share a preview link with teammates first.
+
+</Expandable>
+
+## Next steps
+
+After your first page is live, expand your docs with additional guides, examples, and reference pages. A good next step is to add a second page that explains your main workflow in more detail.
+
+<Callout kind="success">
+  You now have a working documentation baseline. From here, you can customize the structure, add branded content, and connect your publishing workflow to your team process.
+</Callout>

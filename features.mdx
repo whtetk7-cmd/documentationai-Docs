@@ -1,0 +1,255 @@
+---
+title: Core Features
+description: Explore SMITH’s main documentation capabilities, including visual editing, reusable content, collaboration, and AI-assisted updates. Use this page to understand the platform’s day-to-day workflows.
+---
+
+## Overview
+
+SMITH gives you a single place to create, update, and publish documentation without slowing down your team. This starter kit page highlights the core workflows you will use most often: writing content in a visual editor, managing docs with Git, reusing snippets and components, collaborating with your team, and automating updates with AI.
+
+You can use this page as a reference while you shape your own information architecture. The examples below are intentionally generic so you can adapt them to your product, team, and publishing process.
+
+<Callout kind="info">
+
+This is a starter kit template. Replace the sample workflows, labels, and code with your own documentation conventions.
+
+</Callout>
+
+## Core capabilities
+
+<Columns cols={2}>
+  <Card title="Web editor" icon="edit-3" href="#web-editor">
+    Write and publish documentation visually without requiring Git for every change.
+  </Card>
+  <Card title="Docs as code" icon="code" href="#docs-as-code">
+    Keep documentation in version control for review, branching, and automated delivery.
+  </Card>
+  <Card title="Reusable snippets" icon="layers-3" href="#reusable-snippets">
+    Reuse text, React components, and shared patterns across multiple pages.
+  </Card>
+  <Card title="AI automation" icon="sparkles" href="#ai-automation">
+    Keep content fresh with scheduled or event-driven updates from connected sources.
+  </Card>
+</Columns>
+
+## Web editor and docs as code
+
+SMITH supports both visual editing and repository-based workflows, so your team can choose the approach that fits each task. Writers can draft content in the web editor, while engineers can manage technical pages in Git with branches, pull requests, and preview builds.
+
+### When to use each workflow
+
+<Tabs>
+  <Tab title="Web editor" icon="pen-tool">
+    Use the web editor when you want a fast, low-friction way to create or revise pages. It is useful for editorial updates, onboarding content, and cross-functional collaboration.
+
+    <Steps>
+      <Step title="Open a page" icon="file-text">
+        Select the page you want to update from the docs workspace.
+      </Step>
+      <Step title="Edit content" icon="edit-3">
+        Add headings, links, images, and structured components in the editor.
+      </Step>
+      <Step title="Preview changes" icon="eye">
+        Review the page layout before you publish it.
+      </Step>
+      <Step title="Publish" icon="rocket">
+        Send the updated page live once the content is ready.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Docs as code" icon="git-branch">
+    Use a repository workflow when you want code review, branch-based editing, or automated checks. This is ideal for engineering-owned documentation and release notes.
+
+    <CodeGroup tabs="Markdown,TypeScript">
+      ```markdown
+      ---
+      title: Release Notes
+      description: Publish versioned product updates in a repeatable format.
+      ---
+
+      ## What changed
+
+      - Added support for preview builds
+      - Improved navigation for long-form pages
+      - Updated examples for better readability
+      ```
+      ```typescript
+      export const docsPage = {
+        title: "Release Notes",
+        status: "ready-for-review",
+        lastUpdated: "2026-10-28",
+      };
+      ```
+    </CodeGroup>
+  </Tab>
+</Tabs>
+
+## Reusable snippets and components
+
+Reusable snippets help you avoid duplication when the same explanation, warning, or code sample appears in multiple places. You can store content once and reuse it everywhere, which keeps updates consistent and reduces maintenance work.
+
+This is especially useful for:
+- standard installation notes
+- repeated API guidance
+- shared troubleshooting steps
+- branded callouts and legal text
+- React components that render consistent UI blocks
+
+### Example snippet structure
+
+<CodeGroup tabs="Markdown,React">
+  ```markdown
+  ## Standard note
+
+  This integration requires access to the workspace token and the target project identifier.
+  ```
+  ```jsx
+  export function NoteBox({ children }) {
+    return (
+      <div className="note-box">
+        <strong>Note</strong>
+        <p>{children}</p>
+      </div>
+    );
+  }
+  ```
+</CodeGroup>
+
+<Callout kind="tip">
+
+Keep reusable content small and specific. Short snippets are easier to audit, translate, and reuse across pages.
+
+</Callout>
+
+## Collaboration and comments
+
+Documentation often improves when the right people can comment on it at the right time. SMITH supports live editing, inline comments, and mentions so product managers, engineers, support teams, and technical writers can work in the same place.
+
+### Collaboration checklist
+
+<Steps>
+  <Step title="Invite reviewers" icon="users">
+    Add the people who need to review a page before it ships.
+  </Step>
+  <Step title="Leave inline comments" icon="message-square">
+    Point to a sentence, code block, or section that needs clarification.
+  </Step>
+  <Step title="Resolve feedback" icon="check-circle">
+    Update the page and close comments once the issue is fixed.
+  </Step>
+  <Step title="Mention owners" icon="at-sign">
+    Tag the person who owns the next action so nothing is missed.
+  </Step>
+</Steps>
+
+### Collaboration best practices
+
+1. Keep feedback tied to a specific section or example.
+2. Ask for one decision per comment when possible.
+3. Resolve outdated comments quickly so the page stays current.
+4. Use mentions only when someone needs to act.
+
+## AI documentation automations
+
+AI automation helps you keep documentation current without waiting for manual updates. You can use scheduled jobs, merge-triggered workflows, and connected sources to draft changes when product behavior or support feedback changes.
+
+<Tabs>
+  <Tab title="Code changes" icon="code-2">
+    Trigger a draft when implementation details change in the repository.
+
+    ```yaml
+    trigger:
+      event: merge
+      source: github
+    action:
+      draft: update-docs
+      target: /features
+    ```
+  </Tab>
+  <Tab title="Changelog updates" icon="clipboard-list">
+    Use release notes to suggest edits for setup steps, feature descriptions, or limits.
+  </Tab>
+  <Tab title="User feedback" icon="message-circle">
+    Surface recurring questions from support tickets or product feedback and turn them into draft improvements.
+  </Tab>
+  <Tab title="Scheduled refresh" icon="clock">
+    Run routine checks on a weekly or monthly schedule so important pages do not drift out of date.
+  </Tab>
+</Tabs>
+
+<Callout kind="alert">
+
+Review AI-generated drafts before publishing them. Automation should speed up the process, not replace human approval.
+
+</Callout>
+
+## Live preview and publishing
+
+Preview builds let you verify content before it reaches readers. This is important when you are updating navigation, changing component layouts, or publishing time-sensitive content. A good preview flow reduces broken links, layout regressions, and last-minute surprises.
+
+### Recommended publish flow
+
+<Steps>
+  <Step title="Create a draft" icon="file-plus">
+    Start with a draft version so your team can review the page safely.
+  </Step>
+  <Step title="Preview the page" icon="monitor">
+    Check typography, spacing, and links in a staging environment.
+  </Step>
+  <Step title="Request approval" icon="shield-check">
+    Make sure the right reviewer signs off on the final content.
+  </Step>
+  <Step title="Publish live" icon="upload">
+    Promote the approved version to your production site.
+  </Step>
+</Steps>
+
+### Deployment example
+
+<CodeGroup tabs="Shell,JSON">
+  ```bash
+  npm run docs:build
+  npm run docs:preview
+  npm run docs:publish
+  ```
+  ```json
+  {
+    "environment": "production",
+    "status": "published",
+    "previewUrl": "https://dashboard.example.com/docs/previews/feature-update"
+  }
+  ```
+</CodeGroup>
+
+## Advanced notes
+
+<Expandable title="How should you organize documentation content?" default-open="false">
+  
+Use a simple structure with clear ownership, a predictable review path, and reusable building blocks. Start with high-value pages, then expand into deeper guides and reference material as your product grows.
+
+</Expandable>
+
+<Expandable title="What should you automate first?" default-open="false">
+  
+Start with updates that repeat often: release notes, feature descriptions, screenshots, and recurring troubleshooting steps. These are the easiest wins for automation because they are frequent and low risk.
+
+</Expandable>
+
+<Expandable title="How do you keep quality high?" default-open="false">
+  
+Use review checkpoints, preview builds, and clear ownership. You should also keep examples realistic, remove outdated screenshots, and refresh links when product behavior changes.
+
+</Expandable>
+
+## Next steps
+
+To continue building your documentation site, decide which workflow will own each page, then standardize your reusable content and review process. If you are defining your own setup, start small, document one clear path end to end, and expand from there.
+
+<Columns cols={2}>
+  <Card title="Quickstart" icon="book-open" href="/quickstart" horizontal>
+    Learn the fastest path from a blank workspace to a published page.
+  </Card>
+  <Card title="Authentication" icon="lock" href="/authentication" horizontal>
+    See how to secure access and manage protected documentation.
+  </Card>
+</Columns>

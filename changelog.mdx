@@ -1,0 +1,181 @@
+---
+title: Changelog
+description: Track recent updates, feature improvements, and platform changes in SMITH. Review the latest releases and see what changed in the documentation experience.
+---
+
+## Overview
+
+This changelog tracks recent updates in SMITH, including feature releases, bug fixes, behavior changes, and deprecations. Use it to understand what changed, what you need to review, and how to keep your documentation space current.
+
+SMITH is a starter kit template, so the entries below are intentionally generic. Replace them with your own release notes, internal rollout notes, and product-specific details as your team grows.
+
+<Callout kind="info">
+  Use this page as your canonical release history. When you ship an update, add the release note here and link it from your docs home page.
+</Callout>
+
+## Recent Releases
+
+<Update label="2026-10-18" description="v1.4.0" tags={["feature", "improvement"]}>
+
+### New Features
+
+- Added a draft review workflow for documentation changes so you can validate updates before publishing.
+- Introduced structured release note fields for feature updates, bug fixes, behavior changes, and deprecations.
+- Improved page-level metadata handling so titles and descriptions stay consistent across the docs site.
+
+### Improvements
+
+- Refined the editor experience for faster content entry and fewer layout disruptions.
+- Reduced the number of manual steps needed to publish routine documentation updates.
+- Improved default starter content so new teams can customize the template more quickly.
+
+### Bug Fixes
+
+- Fixed an issue where long changelog entries could wrap awkwardly on smaller screens.
+- Resolved inconsistent spacing in update blocks when lists followed a short summary.
+- Corrected metadata rendering for entries that included multiline descriptions.
+
+</Update>
+
+<Update label="2026-09-12" description="v1.3.0" tags={["bugfix", "improvement"]}>
+
+### New Features
+
+- Added clearer release grouping so you can scan recent changes by version.
+- Introduced support for more descriptive tags to help categorize updates by type.
+
+### Improvements
+
+- Improved readability in release notes by tightening paragraph spacing and list structure.
+- Updated the default starter template to encourage concise, reusable documentation patterns.
+- Made the changelog easier to scan on mobile devices and narrow layouts.
+
+### Bug Fixes
+
+- Fixed an issue where nested lists inside update entries could render with inconsistent indentation.
+- Resolved a problem where some release headers were not appearing in the expected order.
+- Corrected a display bug that affected entries with short feature summaries.
+
+</Update>
+
+<Update label="2026-08-05" description="v1.2.0" tags={["feature", "breaking"]}>
+
+### New Features
+
+- Added support for richer changelog entries with clearly separated sections for new features and fixes.
+- Added a lightweight release note pattern that works well for weekly or monthly updates.
+
+### Behavior Changes
+
+- Standardized the recommended changelog format so teams can compare releases more easily.
+- Encouraged consistent use of version labels and date stamps across all updates.
+
+### Deprecation Notices
+
+- Deprecated unstructured release blurbs for new entries.
+- Deprecated vague labels that do not identify version, date, or change type.
+- Deprecated changelog entries that mix roadmap items with shipped releases.
+
+</Update>
+
+## How to Write a Good Changelog Entry
+
+<Steps>
+  <Step title="Name the release clearly" icon="tag">
+    Use a version label and date so readers can quickly identify the update. Keep the title short and consistent across releases.
+  </Step>
+  <Step title="Group changes by type" icon="layers-3">
+    Separate feature updates, improvements, bug fixes, behavior changes, and deprecations. This makes the page easier to scan.
+  </Step>
+  <Step title="Write for action" icon="pen-tool">
+    Tell readers what changed and what they should do next. If an update requires attention, say so directly.
+  </Step>
+  <Step title="Keep the entry current" icon="refresh-cw">
+    Add the newest release first and remove outdated notes when they are no longer useful for your audience.
+  </Step>
+</Steps>
+
+## Release Note Patterns
+
+<CodeGroup tabs="Markdown,JSON">
+  ```markdown
+  <Update label="2026-10-18" description="v1.4.0" tags={["feature", "improvement"]}>
+
+  ### New Features
+
+  - Added draft review workflows.
+  - Improved metadata handling.
+
+  ### Bug Fixes
+
+  - Fixed spacing issues in long entries.
+
+  </Update>
+  ```
+
+  ```json
+  {
+    "label": "2026-10-18",
+    "description": "v1.4.0",
+    "tags": ["feature", "improvement"]
+  }
+  ```
+</CodeGroup>
+
+## Release Types
+
+<Tabs>
+  <Tab title="Feature Release" icon="sparkles">
+    Use this format when you add new documentation capabilities, editor workflows, or publishing tools.
+
+    - Highlight the most visible changes first.
+    - Include any user-facing behavior changes.
+    - Link to deeper setup or migration notes if needed.
+  </Tab>
+  <Tab title="Bug Fix" icon="wrench">
+    Use this format when you correct broken behavior without changing the overall workflow.
+
+    - Describe the issue in plain language.
+    - Explain the impact on readers or editors.
+    - Confirm whether users need to take any action.
+  </Tab>
+  <Tab title="Deprecation" icon="alert-triangle">
+    Use this format when you plan to remove or replace a feature.
+
+    - State what is changing.
+    - Share the replacement path.
+    - Add a timeline when you have one.
+  </Tab>
+</Tabs>
+
+## Tips for Maintaining This Page
+
+<Expandable title="What should you include in each entry?" default-open="true">
+  Include the release date, version, and the most important changes. If something affects authors or readers, make it easy to spot. Keep the language direct and avoid vague wording.
+</Expandable>
+
+<Expandable title="How often should you update it?" default-open="false">
+  Update the page whenever you ship a meaningful change. For active projects, that usually means every release or every sprint.
+</Expandable>
+
+<Expandable title="What should you avoid?" default-open="false">
+  Avoid marketing language, internal jargon, and long implementation notes that belong elsewhere. Keep the changelog concise and scannable.
+</Expandable>
+
+<Callout kind="tip">
+  If you maintain multiple documentation versions, publish the changelog alongside the version that the release affects so readers do not have to guess which notes apply.
+</Callout>
+
+## Suggested Next Steps
+
+<Columns cols={3}>
+  <Card title="Write a Release Note" icon="book-open" href="/quickstart">
+    Create a repeatable format for your next release entry.
+  </Card>
+  <Card title="Organize Documentation" icon="settings" href="/introduction">
+    Set up a home page that helps readers find the latest updates.
+  </Card>
+  <Card title="Review Publishing Workflow" icon="rocket" href="/authentication">
+    Connect your release process to a secure publishing flow.
+  </Card>
+</Columns>

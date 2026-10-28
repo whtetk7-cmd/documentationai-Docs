@@ -1,0 +1,204 @@
+---
+title: Integrations and Connectors
+description: Connect SMITH to the tools that power your documentation workflow, from source control and issue tracking to feedback systems and content sources. Learn how data flows into automated doc updates.
+---
+
+## Overview
+
+SMITH integrations connect your content sources, change signals, and feedback channels to a single documentation workflow. You use them to keep pages current without manually copying updates between tools.
+
+This starter kit page shows the common setup pattern for connectors. It is intentionally generic so you can adapt it to your own systems and policies.
+
+<Callout kind="info">
+  This page is a starter template. Replace the example systems, permissions, and trigger rules with your own environment.
+</Callout>
+
+## Integration types
+
+Use the right connector for the kind of signal you want to bring into SMITH. Some integrations watch code changes, some sync knowledge base content, and some collect user feedback that can trigger an update draft.
+
+<Columns cols={2}>
+  <Card title="Source control" icon="github" href="#git-based-connectors">
+    Sync repository changes from GitHub or GitLab into draft updates and release notes.
+  </Card>
+  <Card title="Knowledge sources" icon="book-open" href="#knowledge-sources">
+    Pull supporting content from tools like Confluence or other internal knowledge bases.
+  </Card>
+  <Card title="Feedback inputs" icon="users" href="#user-feedback-sources">
+    Capture questions, ratings, and comments from readers or internal teams.
+  </Card>
+  <Card title="Automation triggers" icon="zap" href="#content-import-and-triggers">
+    Start updates when content changes, a merge happens, or a schedule runs.
+  </Card>
+</Columns>
+
+## Git-based connectors
+
+GitHub and GitLab are the most common connectors for teams that keep product content near code. You can link a repository, watch selected branches, and turn commits or pull requests into draft documentation updates.
+
+A typical flow looks like this: you connect the repository, scope the folders you want to monitor, and define which events should create drafts. For example, you might trigger on merged pull requests in `main`, or on release tags that match a version pattern.
+
+<Tabs>
+  <Tab title="GitHub" icon="github">
+    GitHub works well when your docs live beside the product code or when release notes are generated from pull request activity.
+
+    ```bash
+    smyth connector add github \
+      --repo "acme/platform-docs" \
+      --branch "main" \
+      --events "pull_request.merged,release.published"
+    ```
+
+    The connector can watch one repository or multiple repositories, depending on how you organize product areas.
+  </Tab>
+  <Tab title="GitLab" icon="git-branch">
+    GitLab is a good fit for teams that already use GitLab CI or store documentation content in the same platform.
+
+    ```bash
+    smyth connector add gitlab \
+      --project "acme/platform-docs" \
+      --branch "main" \
+      --events "merge_request.merged,tag.pushed"
+    ```
+
+    You can limit the connector to specific paths so that only documentation-related changes create drafts.
+  </Tab>
+</Tabs>
+
+<Expandable title="Recommended repository scope" default-open="false">
+  
+  Start with a narrow scope, such as `docs/` or `content/`, so you can verify that the connector behaves as expected before you expand it to the full repository.
+
+  If you also store schemas, changelogs, or example payloads in the repo, add those directories later as separate rules.
+  
+</Expandable>
+
+## Knowledge sources
+
+Confluence and similar systems are useful when teams keep process notes, onboarding material, or support runbooks outside the main repository. SMITH can sync those sources so your docs agent has a broader context when it drafts updates.
+
+Use these connectors when the source of truth lives in a knowledge base rather than in Git. That lets you preserve existing editorial workflows while still giving SMITH structured input for updates and citations.
+
+### How sync behaves
+
+| Source | Typical use | Best trigger |
+|--------|-------------|--------------|
+| Confluence | Internal procedures and team notes | Page edits or published updates |
+| Shared wiki | Reference content and onboarding | Scheduled sync |
+| Knowledge base | Support articles and policy docs | Manual sync or content change |
+
+<Callout kind="tip">
+  Keep your sync rules focused. A smaller, cleaner source set gives you better drafts and easier reviews.
+</Callout>
+
+## User feedback sources
+
+Feedback connectors bring in signals from readers, support teams, or reviewers. These sources help SMITH identify gaps, outdated pages, and questions that need clearer answers.
+
+Common inputs include article ratings, inline comments, support tags, and feedback forms. You can route those signals into a review queue or use them to open draft updates automatically.
+
+### Feedback examples
+
+- Reader ratings that mark pages as helpful or confusing
+- Inline comments from editors and reviewers
+- Support tickets tagged with a documentation issue
+- Post-publish surveys that collect suggested improvements
+
+## Content import and triggers
+
+You can use imported content as a starting point for new pages or updates. This is useful when you are migrating from another platform, consolidating content from multiple tools, or rebuilding an older documentation set.
+
+Triggers define when SMITH should create or refresh content. The most common triggers are repository merges, scheduled syncs, and manual review actions.
+
+<Steps>
+  <Step title="Connect a source" icon="plug">
+    Add the integration, choose the workspace, and authorize access to the source system.
+  </Step>
+  <Step title="Map the content" icon="map">
+    Select the pages, folders, or repositories that should feed into SMITH.
+  </Step>
+  <Step title="Choose triggers" icon="zap">
+    Decide whether updates should run on merge, schedule, or manual approval.
+  </Step>
+  <Step title="Review drafts" icon="file-text">
+    Check the generated draft, confirm citations, and publish when it is ready.
+  </Step>
+</Steps>
+
+## Setup basics
+
+Most integrations follow the same setup pattern. You connect the account, set permissions, choose what to watch, and verify that the first sync completes successfully.
+
+<CodeGroup tabs="Dashboard,cURL,JavaScript">
+  ```text
+1. Open your SMITH workspace.
+2. Go to Integrations.
+3. Choose a connector.
+4. Authorize access.
+5. Save the sync rules.
+6. Run a test sync.
+  ```
+  ```bash
+curl -X POST "https://api.example.com/v1/integrations/connectors" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "github",
+    "workspaceId": "ws_1024",
+    "repository": "acme/platform-docs",
+    "branch": "main",
+    "events": ["pull_request.merged", "release.published"]
+  }'
+  ```
+  ```javascript
+const response = await fetch("https://api.example.com/v1/integrations/connectors", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer YOUR_TOKEN",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    provider: "gitlab",
+    workspaceId: "ws_1024",
+    project: "acme/platform-docs",
+    branch: "main",
+    events: ["merge_request.merged", "tag.pushed"]
+  })
+});
+
+const result = await response.json();
+console.log(result.status);
+  ```
+</CodeGroup>
+
+## Best practices
+
+- Start with one connector before you add more sources.
+- Prefer named branches or clear event rules so updates stay predictable.
+- Keep permissions minimal and grant only the access the sync needs.
+- Review a test draft before you enable automatic publishing.
+- Use consistent naming for workspaces, repositories, and content sources.
+
+<Expandable title="When to use manual sync" default-open="false">
+  
+  Manual sync is useful when you are importing legacy content, validating a new connector, or testing a fresh set of rules. It gives you a safe way to inspect the result before you let automation run on a schedule.
+
+  Once the mapping is stable, switch to event-based or scheduled syncs to reduce maintenance.
+  
+</Expandable>
+
+## Next steps
+
+Once your connectors are in place, connect them to your review process and publishing workflow. That gives you a reliable path from source systems to published documentation, with less manual copying and fewer stale pages.
+
+<Columns cols={3}>
+  <Card title="Set up access control" icon="shield" href="/authentication">
+    Learn how to protect connector access with roles and tokens.
+  </Card>
+  <Card title="Review AI workflows" icon="bot" href="/quickstart">
+    See how automated drafts move from source changes to published updates.
+  </Card>
+  <Card title="Understand releases" icon="calendar" href="/changelog">
+    Track how versioned updates fit into your documentation process.
+  </Card>
+</Columns>

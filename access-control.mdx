@@ -1,0 +1,223 @@
+---
+title: Access Control and Permissions
+description: Configure who can view, edit, and publish documentation in SMITH. This page covers authentication options and role-based access for teams and enterprises.
+---
+
+## Overview
+
+SMITH uses access control to decide who can view, edit, and publish your documentation. You can connect single sign-on, accept token-based requests, and assign roles that match how your team works.
+
+This page is a starter kit template. Adapt the examples to your identity provider, workspace structure, and publishing workflow.
+
+<Callout kind="info">
+
+Use this page as a starting point for your own policy. Replace the sample endpoints, role names, and claim mappings with the values from your identity system.
+
+</Callout>
+
+## Access model
+
+Your access model usually combines authentication and authorization:
+
+- Authentication confirms who the user is.
+- Authorization defines what the user can do.
+- Workspace rules determine which docs spaces they can reach.
+- Role-based permissions control editing, publishing, and admin actions.
+
+<Columns cols={3}>
+  <Card title="Single Sign-On" icon="shield" href="#sso-setup">
+    Let your team sign in with a central identity provider.
+  </Card>
+  <Card title="API Tokens" icon="lock" href="#jwt-and-oauth-20">
+    Support secure machine-to-machine access for automations.
+  </Card>
+  <Card title="Role-Based Access" icon="users" href="#role-based-permissions">
+    Assign clear permissions for editors, reviewers, and admins.
+  </Card>
+</Columns>
+
+## Authentication options
+
+Use one or more authentication methods depending on your organization. For many teams, SSO covers human users while tokens handle automated systems and integrations.
+
+<Tabs>
+  <Tab title="SSO" icon="shield">
+    <p>Connect your identity provider so users can sign in with company credentials.</p>
+
+    <p>Typical providers include Okta, Azure AD, Google Workspace, and other SAML or OIDC systems.</p>
+  </Tab>
+  <Tab title="JWT" icon="lock">
+    <p>Use signed tokens for server-side requests, preview environments, and internal tools.</p>
+
+    <p>Your backend can validate the token, check claims, and apply workspace permissions before serving content.</p>
+  </Tab>
+  <Tab title="OAuth 2.0" icon="key">
+    <p>Use OAuth 2.0 when third-party applications need delegated access on behalf of a user.</p>
+
+    <p>This is useful for integrations that need scoped access instead of full account permissions.</p>
+  </Tab>
+</Tabs>
+
+### SSO setup
+
+A standard SSO setup follows a simple flow:
+
+1. You register SMITH as an application in your identity provider.
+2. You exchange metadata or metadata URLs.
+3. You map identity claims to SMITH users and roles.
+4. You test login and confirm workspace access.
+
+<Steps>
+  <Step title="Create the application" icon="settings">
+    Configure a new SAML or OIDC app in your identity provider. Use the SMITH callback URL from your admin settings.
+  </Step>
+  <Step title="Map user attributes" icon="users">
+    Map a stable user identifier, email address, and optional team or group claims to the fields SMITH expects.
+  </Step>
+  <Step title="Assign default roles" icon="check-circle">
+    Choose the role new users receive on first sign-in, such as viewer or editor.
+  </Step>
+  <Step title="Test the flow" icon="play-circle">
+    Sign in with a test account and verify that the workspace shows the correct permissions.
+  </Step>
+</Steps>
+
+### JWT and OAuth 2.0
+
+When you use tokens, keep the scope narrow and the expiration short. A token should only grant the actions required for the job.
+
+<CodeGroup tabs="JavaScript,Python,cURL">
+  ```javascript
+  const token = process.env.SMITH_ACCESS_TOKEN;
+
+  const response = await fetch("https://api.example.com/v1/workspaces/acme-docs", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json"
+    }
+  });
+
+  const workspace = await response.json();
+  console.log(workspace.name);
+  ```
+  ```python
+  import os
+  import requests
+
+  token = os.environ["SMITH_ACCESS_TOKEN"]
+
+  response = requests.get(
+      "https://api.example.com/v1/workspaces/acme-docs",
+      headers={
+          "Authorization": f"Bearer {token}",
+          "Accept": "application/json",
+      },
+      timeout=30,
+  )
+
+  print(response.json()["name"])
+  ```
+  ```bash
+  curl -H "Authorization: Bearer $SMITH_ACCESS_TOKEN" \
+    -H "Accept: application/json" \
+    https://api.example.com/v1/workspaces/acme-docs
+  ```
+</CodeGroup>
+
+## Role-based permissions
+
+Roles should reflect the work your team actually does. Keep the list short enough that people can understand it at a glance.
+
+| Role | Typical capabilities | Example use |
+|------|----------------------|-------------|
+| Viewer | Read published docs and preview private drafts | Support teams and external stakeholders |
+| Editor | Create and update pages, snippets, and assets | Writers and subject matter experts |
+| Publisher | Publish approved content to production | Docs leads and release managers |
+| Admin | Manage users, roles, and workspace settings | Platform owners and operations teams |
+
+<Callout kind="tip">
+
+If you need custom behavior, start with a small set of roles and add group-based exceptions only when you have a clear business need.
+
+</Callout>
+
+### Permission design rules
+
+- Give users the least privilege they need.
+- Separate content editing from publishing when approvals matter.
+- Use group membership for team-wide access.
+- Review elevated access on a schedule.
+- Remove access promptly when people change teams.
+
+## Workspace access rules
+
+Workspace rules help you decide who can enter a docs space and what they can see once they are inside. In SMITH, you can model access by team, project, environment, or content sensitivity.
+
+<Tabs>
+  <Tab title="Open workspace" icon="globe">
+    Anyone with a valid account can view the workspace, but only editors and above can change content.
+  </Tab>
+  <Tab title="Restricted workspace" icon="lock">
+    Only approved users or groups can enter the workspace. This is useful for private roadmaps, internal policies, and pre-release product docs.
+  </Tab>
+  <Tab title="Hybrid model" icon="users">
+    Some pages remain public while private sections require sign-in. Use this when you publish both public help content and internal runbooks.
+  </Tab>
+</Tabs>
+
+## Managing team access
+
+You can manage access manually or automate it through your identity provider. For teams that change often, automation reduces drift and prevents stale permissions.
+
+<Steps>
+  <Step title="Connect identity groups" icon="users">
+    Sync groups from your identity provider so team membership stays current.
+  </Step>
+  <Step title="Assign workspace roles" icon="key">
+    Map each group to a role such as viewer, editor, publisher, or admin.
+  </Step>
+  <Step title="Review exceptions" icon="alert-triangle">
+    Check any manually assigned users so they do not bypass your normal policy.
+  </Step>
+  <Step title="Audit changes" icon="bar-chart">
+    Review access logs and role changes after launches, reorganizations, or incidents.
+  </Step>
+</Steps>
+
+<ExpandableGroup>
+  <Expandable title="How do I handle contractors?" default-open="true" title-type="h3">
+    Give contractors the minimum access required, limit their workspace membership, and set an expiration date for their account whenever possible.
+  </Expandable>
+  <Expandable title="Can I mix SSO with tokens?" default-open="false" title-type="h3">
+    Yes. Many teams use SSO for people and tokens for systems. Keep each path separate so you can audit access cleanly.
+  </Expandable>
+  <Expandable title="What should I test before launch?" default-open="false" title-type="h3">
+    Test sign-in, role assignment, workspace visibility, publish permissions, and account removal. Confirm that unauthorized users cannot reach restricted pages.
+  </Expandable>
+</ExpandableGroup>
+
+## Security tips
+
+<Callout kind="alert">
+
+Do not store long-lived secrets in page content, shared chat, or public examples. Use your secret manager and rotate credentials on a schedule.
+
+</Callout>
+
+A good access policy is simple, explicit, and easy to audit. If you cannot explain a permission rule in one sentence, you probably need to simplify it.
+
+You should also document who approves access changes, how often you review roles, and what happens when a user leaves the company. Clear process is just as important as technical enforcement.
+
+## Next steps
+
+Use the sections above to build your own access model, then adapt the code, role names, and group mappings to your environment. For most teams, the best setup is the one that is easy to understand, easy to review, and hard to misuse.
+
+<Columns cols={2}>
+  <Card title="Write your policy" icon="book-open" href="#overview">
+    Document your approval rules, role definitions, and review cadence.
+  </Card>
+  <Card title="Connect your provider" icon="external-link" href="https://docs.example.com" target="_blank">
+    Link your identity system and verify the sign-in flow in a test workspace.
+  </Card>
+</Columns>
